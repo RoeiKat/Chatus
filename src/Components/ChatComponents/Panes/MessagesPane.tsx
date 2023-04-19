@@ -1,3 +1,28 @@
-export const MessagesPane = function () {
-  return <div className="col-9">Messages pane</div>;
+import { Conversation } from "../../../Interface/conversation.interface";
+import { MessageForm } from "../Components/Messages/MessageForm";
+import { MessagesContainer } from "../Components/Messages/MessagesContainer";
+import { MessagesHeader } from "../Components/Messages/MessagesHeader";
+interface MessagesPaneProps {
+  currentConversation: Conversation | null;
+}
+
+export const MessagesPane = function (props: MessagesPaneProps) {
+  const { currentConversation } = props;
+  const userToRender = currentConversation?.firstUser;
+  return (
+    <div className="col-12 col-sm-9">
+      {currentConversation ? (
+        <div>
+          <MessagesHeader user={userToRender!} />
+          <MessagesContainer
+            messages={currentConversation.messages}
+            currentUser={currentConversation.firstUser}
+          />
+          <MessageForm />
+        </div>
+      ) : (
+        <div></div>
+      )}
+    </div>
+  );
 };

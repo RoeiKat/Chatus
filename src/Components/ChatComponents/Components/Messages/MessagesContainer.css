@@ -1,0 +1,8 @@
+.messages-container {
+  height: 30rem;
+  overflow: hidden;
+  background: #333138;
+}
+.messages-container:hover {
+  overflow-y: scroll;
+}

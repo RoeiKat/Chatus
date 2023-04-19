@@ -1,0 +1,9 @@
+.message-pill {
+  background: #fff;
+  display: table;
+  min-width: 150px;
+  max-width: 50%;
+  border-radius: 60px;
+  padding: 10px;
+  margin-top: 8px;
+}
