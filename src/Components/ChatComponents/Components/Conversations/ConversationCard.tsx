@@ -10,7 +10,7 @@ export const ConversationCard = function (props: ConversationCardProps) {
   const { conversation, setConversation } = props;
   const { messages } = conversation;
   const lastMessage = messages[messages.length - 1];
-  const userToRender = conversation.firstUser;
+  const userToRender = conversation.initUser;
   let messageDate: string;
   const dummyDate = new Date(1681886023349);
   const currentDate = new Date(Date.now());

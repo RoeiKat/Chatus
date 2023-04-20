@@ -13,13 +13,14 @@ interface RegisterInfo {
 }
 
 export const userRegister = function (registerInfo: RegisterInfo) {
+  console.log(registerInfo);
   return (dispatch: AppDispatch) => {
     const postToServ = fetch(URL, {
       method: "POST",
       headers: {
         "Content-Type": "Application/json",
       },
-      body: JSON.stringify(registerInfo),
+      body: JSON.stringify({ ...registerInfo }),
     });
     postToServ
       .then((results) => {

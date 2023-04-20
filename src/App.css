@@ -1,3 +1,6 @@
+::placeholder {
+  color: #fffffa;
+}
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
@@ -27,4 +30,36 @@
 .last-message {
   color: rgba(255, 255, 255, 0.7);
   font-size: 12px;
+}
+
+.input-container {
+  border-radius: 58px;
+  background: #333138;
+}
+
+input {
+  background: none;
+  border: none;
+  outline: none;
+}
+
+::-webkit-autofill:focus {
+  border: none;
+  -webkit-text-fill-color: none;
+  -webkit-box-shadow: none;
+  transition: none;
+}
+
+input:-webkit-autofill:hover {
+  background: none;
+}
+input:-webkit-autofill:focus {
+  border: none;
+  -webkit-text-fill-color: none;
+  -webkit-box-shadow: none;
+}
+
+input:-webkit-autofill:active {
+  background: none;
+  -webkit-box-shadow: none !important;
 }

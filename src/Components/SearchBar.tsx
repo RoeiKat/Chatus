@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Form, Button } from "react-bootstrap";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -5,13 +6,11 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 export const SearchBar = function () {
   const submitHandler = function (e: React.FormEvent) {
     e.preventDefault();
-    console.log("got here");
   };
   return (
     <Form
-      className="d-flex form-control text-light"
+      className="d-flex form-control text-light input-container"
       onSubmit={submitHandler}
-      style={{ borderRadius: "58px", background: "#333138" }}
     >
       <span className="mx-1 opacity-75">
         <FontAwesomeIcon icon={faMagnifyingGlass} />

@@ -1,7 +1,7 @@
 import { baseUrl } from "../baseUrl";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const URL = `${baseUrl}/users`;
+const URL = `${baseUrl}/user/login`;
 
 type LoginInfo = {
   email: string;

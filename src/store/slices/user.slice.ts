@@ -14,7 +14,7 @@ const initialState: UserInitalState = {
   userId: null,
   token: null,
   expiryDate: null,
-  loading: false,
+  loading: true,
   checkAuth: false,
   error: undefined,
 };
@@ -39,6 +39,9 @@ const userSlice = createSlice({
       state.expiryDate = expiryDate;
       state.checkAuth = true;
     },
+    setLoading(state, action) {
+      state.loading = action.payload;
+    },
     resetError(state) {
       state.error = undefined;
     },
@@ -49,6 +52,7 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(userLogin.fulfilled, (state, action) => {
+        state.error = undefined;
         const hours = 24;
         const remainingMS = 60 * 60 * hours * 1000;
         const expiryDate = new Date(new Date().getTime() + remainingMS);

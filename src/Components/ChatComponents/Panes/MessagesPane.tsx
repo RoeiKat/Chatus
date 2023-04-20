@@ -8,7 +8,7 @@ interface MessagesPaneProps {
 
 export const MessagesPane = function (props: MessagesPaneProps) {
   const { currentConversation } = props;
-  const userToRender = currentConversation?.firstUser;
+  const userToRender = currentConversation?.initUser;
   return (
     <div className="col-12 col-sm-9">
       {currentConversation ? (
@@ -16,7 +16,7 @@ export const MessagesPane = function (props: MessagesPaneProps) {
           <MessagesHeader user={userToRender!} />
           <MessagesContainer
             messages={currentConversation.messages}
-            currentUser={currentConversation.firstUser}
+            currentUser={currentConversation.initUser}
           />
           <MessageForm />
         </div>
