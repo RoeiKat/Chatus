@@ -1,0 +1,11 @@
+.logout-btn {
+  color: white;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.username-light {
+  color: #fffffa;
+  font-weight: 500;
+  margin-top: 10px;
+  margin-left: 10px;
+}

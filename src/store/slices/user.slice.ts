@@ -6,6 +6,8 @@ interface UserInitalState {
   token: string | null;
   loading: boolean;
   checkAuth: boolean;
+  color: string | undefined;
+  username: string | null;
   expiryDate: string | null;
   error: string | undefined;
 }
@@ -14,7 +16,9 @@ const initialState: UserInitalState = {
   userId: null,
   token: null,
   expiryDate: null,
-  loading: true,
+  loading: false,
+  color: undefined,
+  username: null,
   checkAuth: false,
   error: undefined,
 };
@@ -25,16 +29,16 @@ const userSlice = createSlice({
   reducers: {
     logout(state) {
       state.checkAuth = false;
-      localStorage.removeItem("token");
       state.token = null;
-      localStorage.removeItem("userId");
       state.userId = null;
-      localStorage.removeItem("expiryDate");
       state.expiryDate = null;
+      localStorage.removeItem("chatusLS");
     },
     automaticLogin(state, action) {
-      const { token, userId, expiryDate } = action.payload;
+      const { token, userId, expiryDate, color, username } = action.payload;
       state.token = token;
+      state.username = username;
+      state.color = color;
       state.userId = userId;
       state.expiryDate = expiryDate;
       state.checkAuth = true;
@@ -49,21 +53,30 @@ const userSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(userLogin.pending, (state) => {
+        state.error = undefined;
         state.loading = true;
       })
       .addCase(userLogin.fulfilled, (state, action) => {
-        state.error = undefined;
         const hours = 24;
         const remainingMS = 60 * 60 * hours * 1000;
         const expiryDate = new Date(new Date().getTime() + remainingMS);
-        const { userId, token } = action.payload;
+        const { userId, token, color, username } = action.payload;
+        state.color = color;
+        state.username = username;
         state.loading = false;
-        localStorage.setItem("token", token);
         state.token = token;
-        localStorage.setItem("userId", userId);
         state.userId = userId;
-        localStorage.setItem("expiryDate", expiryDate.toISOString());
         state.expiryDate = expiryDate.toISOString();
+        localStorage.setItem(
+          "chatusLS",
+          JSON.stringify({
+            token,
+            userId,
+            color,
+            username,
+            expirtDate: expiryDate.toISOString(),
+          })
+        );
         state.checkAuth = true;
       })
       .addCase(userLogin.rejected, (state, action) => {

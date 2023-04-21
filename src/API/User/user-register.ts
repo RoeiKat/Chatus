@@ -9,7 +9,7 @@ interface RegisterInfo {
   username: string;
   password: string;
   confirmPassword: string;
-  avatar?: string;
+  color?: string;
 }
 
 export const userRegister = function (registerInfo: RegisterInfo) {

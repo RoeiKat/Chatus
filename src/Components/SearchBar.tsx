@@ -9,6 +9,7 @@ export const SearchBar = function () {
   };
   return (
     <Form
+      style={{ marginBottom: "5px" }}
       className="d-flex form-control text-light input-container"
       onSubmit={submitHandler}
     >

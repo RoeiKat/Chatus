@@ -2,22 +2,27 @@ import { baseUrl } from "../baseUrl";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AppDispatch } from "../../store/store";
 import { conversationActions } from "../../store/slices/conversation.slice";
+import { ChatusStorage } from "../../Interface/storage.interface";
 
 const URL = `${baseUrl}/chat/`;
 
 export const getConversations = createAsyncThunk(
   "/conversations/getConversations",
-  (data: { stateToken: string }, thunkApi) => {
+  (data: { stateToken: string | null }, thunkApi) => {
     const { stateToken } = data;
-    const token = localStorage.getItem("token");
-    if (stateToken.toString() !== token?.toString())
+    const storage: ChatusStorage = JSON.parse(
+      localStorage.getItem("chatusLS")!
+    );
+    if (!storage) throw new Error("No storage found!");
+    else if (stateToken?.toString() !== storage.token?.toString())
       throw new Error("Token error!");
     return fetch(URL, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${storage.token}`,
       },
     })
       .then((res) => {
+        console.log("Got HERE");
         if (!res.ok) {
           throw new Error("Something went wrong");
         }

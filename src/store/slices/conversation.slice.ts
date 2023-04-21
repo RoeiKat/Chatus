@@ -34,7 +34,8 @@ const conversationSlice = createSlice({
         state.loading = true;
       })
       .addCase(getConversations.fulfilled, (state, action) => {
-        state.conversations = action.payload;
+        state.conversations = action.payload.conversations;
+        console.log("gotHere");
         state.loading = false;
       })
       .addCase(getConversations.rejected, (state, action) => {

@@ -1,18 +1,8 @@
 .send-button {
   border-radius: 50%;
 }
-.message-input-container {
-  border-radius: 58px;
-  background: #333138;
-  margin-left: 20px;
-  display: flex;
-  align-items: center;
-}
+
 .message-input {
-  background: none;
-  border-radius: 60px;
-  outline: none;
-  border: none;
   width: 95%;
 }
 
@@ -20,6 +10,7 @@
   font-size: 28px;
   color: rgba(255, 255, 255, 0.3);
   margin-left: 5px;
+  transition: 500ms;
 }
 
 .emoji-btn:hover {
