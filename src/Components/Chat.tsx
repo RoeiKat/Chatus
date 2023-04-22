@@ -2,20 +2,34 @@ import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getConversations } from "../API/Chat/conversations-get";
 import { Conversation } from "../Interface/conversation.interface";
+import { Socket } from "socket.io-client";
 
 import { Card } from "react-bootstrap";
 import { ConversationsPane } from "./ChatComponents/Panes/ConversationsPane";
 import { MessagesPane } from "./ChatComponents/Panes/MessagesPane";
 
-export const Chat = function () {
+export const Chat = function (props: { socket: Socket }) {
+  const { socket } = props;
   const dispatch = useAppDispatch();
+  const [reload, setReload] = useState<boolean>(true);
   const { token, checkAuth, userId } = useAppSelector((state) => state.user);
 
+  socket.on("newConversationEvent", (data) => {
+    const { initUser, otherUser } = data;
+    if (userId !== initUser && userId !== otherUser) {
+      return;
+    } else {
+      setReload(true);
+    }
+  });
+
   useEffect(() => {
-    dispatch(getConversations({ stateToken: token }));
-  }, [dispatch, checkAuth, token]);
+    if (reload) {
+      dispatch(getConversations({ stateToken: token }));
+      setReload(false);
+    }
+  }, [dispatch, checkAuth, token, reload]);
   const { conversations } = useAppSelector((state) => state.conversations);
-  console.log(conversations);
   const [currentConversation, setCurrentConversation] =
     useState<Conversation | null>(null);
 

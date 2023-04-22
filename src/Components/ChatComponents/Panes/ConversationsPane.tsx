@@ -1,9 +1,12 @@
+import { useState } from "react";
+import { User } from "../../../Interface/user.interface";
 import "./ConversationPane.css";
 import { useAppSelector } from "../../../store/hooks";
 import { Conversation } from "../../../Interface/conversation.interface";
-import { SearchBar } from "../../SearchBar";
+import { SearchBar } from "../../Search/SearchBar";
 import { ConversationCard } from "../Components/Conversations/ConversationCard";
 import { UserPane } from "../../UserComponents/UserPane";
+import { SearchUserCard } from "../../Search/SearchUserCard";
 
 interface ConversationPaneProps {
   currentConversation: Conversation | null;
@@ -14,24 +17,54 @@ interface ConversationPaneProps {
 export const ConversationsPane = function (props: ConversationPaneProps) {
   const { userId, color, username } = useAppSelector((state) => state.user);
   const { currentConversation, conversations, setConversation } = props;
+  const [searchResults, setSearchResults] = useState<User[] | null>(null);
+  const [query, setQuery] = useState<string>("");
+
   return (
     <div className="col-12 col-sm-3 border-end">
       <div className="border-bottom mt-1 p-2">
-        <SearchBar />
+        <SearchBar
+          setResults={(users: User[]) => setSearchResults(users)}
+          query={query}
+          setQuery={(str: string) => {
+            setSearchResults(null);
+            setQuery(str);
+          }}
+          searchResults={searchResults}
+        />
       </div>
-      <div className="conversations-container">
-        {conversations?.length &&
-          conversations.map((conversation, index) => {
+      {!searchResults ? (
+        <div className="conversations-container">
+          {conversations?.length
+            ? conversations.map((conversation, index) => {
+                return (
+                  <ConversationCard
+                    key={conversation._id}
+                    conversation={conversation}
+                    setConversation={setConversation}
+                    userId={userId}
+                  />
+                );
+              })
+            : null}
+        </div>
+      ) : (
+        <div className="conversations-container">
+          {searchResults.map((user) => {
             return (
-              <ConversationCard
-                key={conversation._id}
-                conversation={conversation}
-                setConversation={setConversation}
-                userId={userId}
+              <SearchUserCard
+                key={user._id}
+                user={user}
+                setConversation={(newConversation: Conversation) => {
+                  setSearchResults(null);
+                  setQuery("");
+                  setConversation(newConversation);
+                }}
               />
             );
           })}
-      </div>
+        </div>
+      )}
       <div className="mt-2">
         <UserPane color={color} username={username} />
       </div>

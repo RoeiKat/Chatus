@@ -22,7 +22,6 @@ export const getConversations = createAsyncThunk(
       },
     })
       .then((res) => {
-        console.log("Got HERE");
         if (!res.ok) {
           throw new Error("Something went wrong");
         }

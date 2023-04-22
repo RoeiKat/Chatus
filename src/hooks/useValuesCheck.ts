@@ -12,25 +12,29 @@ export const useValuesCheck = function (
     if (val) {
       const timer = setTimeout(() => {
         if (path === "email") {
-          checkTakenEmail(val).then((results) => {
-            if (results.status === 200) {
-              validFunc(true);
-            } else if (results.status === 206) {
-              return;
-            } else {
-              errFunc("Email taken, try another");
-            }
-          });
+          checkTakenEmail(val)
+            .then((results) => {
+              if (results.status === 200) {
+                validFunc(true);
+              } else if (results.status === 206) {
+                return;
+              } else {
+                errFunc("Email taken, try another");
+              }
+            })
+            .catch((error) => console.log(error));
         } else {
-          checkTakenUsername(val).then((results) => {
-            if (results.status === 200) {
-              validFunc(true);
-            } else if (results.status === 206) {
-              return;
-            } else {
-              errFunc("Email taken, try another");
-            }
-          });
+          checkTakenUsername(val)
+            .then((results) => {
+              if (results.status === 200) {
+                validFunc(true);
+              } else if (results.status === 206) {
+                return;
+              } else {
+                errFunc("Email taken, try another");
+              }
+            })
+            .catch((error) => console.log(error));
         }
       }, 2000);
       return () => clearTimeout(timer);

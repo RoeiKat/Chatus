@@ -7,4 +7,5 @@ export interface Conversation {
   messages: Message[];
   notifications: number;
   createdAt?: string;
+  updatedAt?: string;
 }

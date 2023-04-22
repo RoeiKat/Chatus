@@ -1,3 +1,4 @@
+import { useAppSelector } from "../../../../store/hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { User } from "../../../../Interface/user.interface";
 import { UserAvatar } from "../../../UserComponents/UserAvatar";
@@ -8,12 +9,21 @@ export const MessagesHeader = function (props: {
   closeConversation: () => void;
 }) {
   const { user, closeConversation } = props;
+  const { onlineUsers } = useAppSelector((state) => state.ui);
+  const connectedUser: boolean =
+    onlineUsers.findIndex((onlineUser) => onlineUser.userId === user?._id) !==
+    -1
+      ? true
+      : false;
   return (
     <div className={`col-12 d-flex justify-content-between`}>
       {user && (
         <div className="mx-3 mt-2 mb-2 d-flex">
           <UserAvatar username={user.username} color={user.color} />
-          <div className="mx-3 username">{user.username}</div>
+          <div className="mx-3">
+            <div className="username">{user.username}</div>
+            <div className="active-user">{connectedUser ? "Online" : ""}</div>
+          </div>
         </div>
       )}
       {user && (

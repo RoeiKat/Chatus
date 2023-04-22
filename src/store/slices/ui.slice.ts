@@ -1,11 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface SocketsData {
+  socketId: string;
+  userId: string;
+}
+
 interface UiInitialState {
   initalLoad: boolean;
+  onlineUsers: SocketsData[];
 }
 
 const initialState: UiInitialState = {
   initalLoad: true,
+  onlineUsers: [],
 };
 
 const uiSlice = createSlice({
@@ -14,6 +21,9 @@ const uiSlice = createSlice({
   reducers: {
     setInitialLoad(state) {
       state.initalLoad = false;
+    },
+    setOnlineUsers(state, action) {
+      state.onlineUsers = action.payload;
     },
   },
 });

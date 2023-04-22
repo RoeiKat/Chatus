@@ -218,3 +218,11 @@ input:focus + .form-label {
   transition: 500ms;
   color: #ffffff;
 }
+
+.active-user {
+  color: #268fe8;
+  font-size: 10px;
+  padding: 0;
+  margin: 0;
+  margin-left: 2px;
+}
