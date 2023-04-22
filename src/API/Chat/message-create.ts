@@ -16,5 +16,15 @@ export const postMessage = function (message: string, to: string) {
       "Content-Type": "Application/Json",
     },
     body: JSON.stringify({ message, to }),
-  });
+  })
+    .then((results) => {
+      if (!results.ok) {
+        throw new Error("Something went wrong...");
+      } else {
+        return results.json();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };

@@ -2,10 +2,9 @@ import { Message } from "./message.interface";
 import { User } from "./user.interface";
 export interface Conversation {
   _id?: string;
-  initUser: User;
-  otherUser: User;
+  initUser: { user: User; notifications?: number };
+  otherUser: { user: User; notifications?: number };
   messages: Message[];
-  notifications: number;
   createdAt?: string;
   updatedAt?: string;
 }

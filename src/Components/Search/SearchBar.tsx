@@ -46,6 +46,7 @@ export const SearchBar = function (props: {
         type="text"
         style={{ marginTop: "3px" }}
         value={query}
+        autoComplete="off"
         className="mx-1 text-light col-10 col-sm-5 col-md-7 col-lg-9 "
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setQuery(e.target.value)

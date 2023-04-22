@@ -31,7 +31,7 @@ export const useValuesCheck = function (
               } else if (results.status === 206) {
                 return;
               } else {
-                errFunc("Email taken, try another");
+                errFunc("Username taken, try another");
               }
             })
             .catch((error) => console.log(error));

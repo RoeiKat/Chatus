@@ -226,3 +226,11 @@ input:focus + .form-label {
   margin: 0;
   margin-left: 2px;
 }
+
+.notifications {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+}

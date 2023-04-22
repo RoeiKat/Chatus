@@ -7,17 +7,26 @@ export const SearchUserCard = function (props: {
   user: User;
   setConversation: (conversation: Conversation) => void;
 }) {
+  let newConversation: Conversation;
   const { user, setConversation } = props;
   const { userId, username } = useAppSelector((state) => state.user);
-  const newConversation: Conversation = {
-    initUser: {
-      _id: userId!,
-      username: username!,
-    },
-    otherUser: user,
-    messages: [],
-    notifications: 0,
-  };
+  const { conversations } = useAppSelector((state) => state.conversations);
+  if (conversations) {
+    const index = conversations.findIndex((a) => {
+      return a.otherUser.user.username === user.username;
+    });
+
+    newConversation = conversations[index]
+      ? conversations[index]
+      : {
+          initUser: {
+            user: { _id: userId!, username: username! },
+          },
+          otherUser: { user: user },
+          messages: [],
+          createdAt: new Date(Date.now()).toString(),
+        };
+  }
 
   return (
     <div

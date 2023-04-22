@@ -14,6 +14,15 @@ export const Chat = function (props: { socket: Socket }) {
   const [reload, setReload] = useState<boolean>(true);
   const { token, checkAuth, userId } = useAppSelector((state) => state.user);
 
+  socket.on("newMessageEvent", (data) => {
+    const { recieverId, senderId } = data;
+    if (userId !== recieverId && userId !== senderId) {
+      return;
+    } else {
+      setReload(true);
+    }
+  });
+
   socket.on("newConversationEvent", (data) => {
     const { initUser, otherUser } = data;
     if (userId !== initUser && userId !== otherUser) {
@@ -46,9 +55,13 @@ export const Chat = function (props: { socket: Socket }) {
         }
       />
       <MessagesPane
+        socket={socket}
         currentConversation={currentConversation}
         userId={userId}
-        setConversation={() => setCurrentConversation(null)}
+        closeConversation={() => setCurrentConversation(null)}
+        setConversation={(conversation: Conversation) =>
+          setCurrentConversation(conversation)
+        }
       />
     </Card>
   );

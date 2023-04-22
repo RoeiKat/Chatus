@@ -1,7 +1,5 @@
 import { baseUrl } from "../baseUrl";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { AppDispatch } from "../../store/store";
-import { conversationActions } from "../../store/slices/conversation.slice";
 import { ChatusStorage } from "../../Interface/storage.interface";
 
 const URL = `${baseUrl}/chat/`;
@@ -33,29 +31,21 @@ export const getConversations = createAsyncThunk(
   }
 );
 
-export const getSingleConversation = function (conversationId: string) {
-  const token = localStorage.getItem("token");
-  return (dispatch: AppDispatch) => {
-    const getData = fetch(`${URL}${conversationId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+export const getMessages = function (conversationId: string) {
+  const storage = JSON.parse(localStorage.getItem("chatusLS")!);
+  return fetch(`${URL}${conversationId}`, {
+    headers: {
+      Authorization: `Bearer ${storage.token}`,
+    },
+  })
+    .then((results) => {
+      if (!results.ok) {
+        throw new Error("Something went wrong");
+      } else {
+        return results.json();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
     });
-    getData
-      .then((results) => {
-        if (!results.ok) {
-          return results.json().then((foundError) => {
-            throw new Error(foundError.message);
-          });
-        } else {
-          return results.json();
-        }
-      })
-      .then((conversation) => {
-        dispatch(conversationActions.setCurrentConversation(conversation));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 };

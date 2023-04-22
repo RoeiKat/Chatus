@@ -12,20 +12,31 @@ import { postMessage } from "../../../../API/Chat/message-create";
 
 export const MessageForm = function (props: {
   currentConversation: Conversation | null;
+  setConversation: (conversation: Conversation) => void;
   userId: string | null;
 }) {
-  const { currentConversation, userId } = props;
+  const { currentConversation, userId, setConversation } = props;
   const [message, setMessage] = useState<string>("");
   const toUser =
-    userId === currentConversation?.initUser._id
-      ? currentConversation.otherUser._id
-      : currentConversation?.initUser._id;
+    currentConversation && userId === currentConversation?.initUser.user._id
+      ? currentConversation.otherUser.user._id
+      : currentConversation?.initUser.user._id;
   const submitHandler = function (e: React.FormEvent) {
     e.preventDefault();
     if (!message) {
       return;
     }
-    postMessage(message, toUser!);
+    postMessage(message, toUser!)
+      .then((results) => {
+        const { conversation } = results;
+        setConversation(conversation);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setMessage("");
+      });
   };
 
   return (

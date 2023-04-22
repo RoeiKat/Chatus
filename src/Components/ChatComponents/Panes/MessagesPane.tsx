@@ -1,30 +1,44 @@
+import { Socket } from "socket.io-client";
 import { Conversation } from "../../../Interface/conversation.interface";
 import { MessageForm } from "../Components/Messages/MessageForm";
 import { MessagesContainer } from "../Components/Messages/MessagesContainer";
 import { MessagesHeader } from "../Components/Messages/MessagesHeader";
 interface MessagesPaneProps {
   currentConversation: Conversation | null;
-  setConversation: () => void;
+  closeConversation: () => void;
   userId: string | null;
+  setConversation: (conversation: Conversation) => void;
+  socket: Socket;
 }
 
 export const MessagesPane = function (props: MessagesPaneProps) {
-  const { currentConversation, userId, setConversation } = props;
+  const {
+    currentConversation,
+    userId,
+    closeConversation,
+    setConversation,
+    socket,
+  } = props;
   const userToRender =
-    currentConversation?.initUser._id === userId
-      ? currentConversation?.otherUser
-      : currentConversation?.initUser;
+    currentConversation?.initUser.user._id === userId
+      ? currentConversation?.otherUser.user
+      : currentConversation?.initUser.user;
   return (
     <div className="col-12 col-sm-9">
       <div>
         <MessagesHeader
           user={userToRender!}
-          closeConversation={setConversation}
+          closeConversation={closeConversation}
         />
-        <MessagesContainer currentConversation={currentConversation} />
+        <MessagesContainer
+          currentConversation={currentConversation}
+          socket={socket}
+          userId={userId}
+        />
         <MessageForm
           currentConversation={currentConversation}
           userId={userId}
+          setConversation={setConversation}
         />
       </div>
     </div>
