@@ -16,9 +16,13 @@ export const MessagesHeader = function (props: {
       ? true
       : false;
   return (
-    <div className={`col-12 d-flex justify-content-between`}>
+    <div
+      className={`col-12 d-flex justify-content-between ${
+        user && "border-bottom border-secondary"
+      }`}
+    >
       {user && (
-        <div className="mx-3 mt-2 mb-2 d-flex">
+        <div className="mx-3 mt-2 mb-1 d-flex">
           <UserAvatar username={user.username} color={user.color} />
           <div className="mx-3">
             <div className="username">{user.username}</div>

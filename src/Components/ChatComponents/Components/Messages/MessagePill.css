@@ -1,14 +1,22 @@
 .message-pill {
   background: #333;
   color: #fffffa;
-  display: table;
   min-width: 40px;
-  max-width: 50%;
-  border-radius: 60px;
-  padding: 10px;
-  margin-top: 8px;
+  max-width: 60%;
+  border-radius: 15px;
+  text-align: center;
+  padding: 8px;
+  margin-right: 8px;
+  margin-top: 6px;
+  margin-bottom: 6px;
 }
 
 .message-pill-user {
   background: #268fe8;
+  margin-left: 8px;
+}
+
+.message-text {
+  padding: 5px;
+  font-size: 15px;
 }

@@ -4,12 +4,13 @@ import { UserAvatar } from "../../../UserComponents/UserAvatar";
 
 interface ConversationCardProps {
   conversation: Conversation;
+  currentConversation: Conversation | null;
   setConversation: (conversation: Conversation) => void;
   userId: string | null;
 }
 
 export const ConversationCard = function (props: ConversationCardProps) {
-  const { conversation, setConversation, userId } = props;
+  const { conversation, setConversation, userId, currentConversation } = props;
   const { messages, initUser, otherUser } = conversation;
   const userToRender = initUser.user._id === userId ? otherUser : initUser;
   const lastMessage = messages && messages[messages.length - 1];
@@ -41,8 +42,14 @@ export const ConversationCard = function (props: ConversationCardProps) {
   }
   return (
     <div
-      className="border-light border-bottom d-flex align-items-center p-2"
-      style={{ background: "rgba(255,255,255,0.1)" }}
+      className="border-secondary border-bottom d-flex align-items-center p-2"
+      style={{
+        background: `${
+          currentConversation?._id === conversation._id
+            ? "rgba(255,255,255,0.1)"
+            : ""
+        }`,
+      }}
       onClick={() => setConversation(conversation)}
     >
       <div>
@@ -70,7 +77,7 @@ export const ConversationCard = function (props: ConversationCardProps) {
                 </div>
               )}
             </div>
-            <div>
+            <div className="notifications-container">
               {userToRender.notifications !== 0 ? (
                 <span className="notifications">
                   {userToRender.notifications}

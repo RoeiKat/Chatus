@@ -13,6 +13,15 @@ export const Chat = function (props: { socket: Socket }) {
   const dispatch = useAppDispatch();
   const [reload, setReload] = useState<boolean>(true);
   const { token, checkAuth, userId } = useAppSelector((state) => state.user);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  const handleResize = () => {
+    if (window.innerWidth < 720) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  };
 
   socket.on("newMessageEvent", (data) => {
     const { recieverId, senderId } = data;
@@ -33,33 +42,53 @@ export const Chat = function (props: { socket: Socket }) {
   });
 
   useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  });
+
+  useEffect(() => {
     if (reload) {
       dispatch(getConversations({ stateToken: token }));
       setReload(false);
     }
   }, [dispatch, checkAuth, token, reload]);
+
   const { conversations } = useAppSelector((state) => state.conversations);
   const [currentConversation, setCurrentConversation] =
     useState<Conversation | null>(null);
 
   return (
-    <Card className="col-10 d-flex flex-row chat-card">
-      <ConversationsPane
-        currentConversation={currentConversation}
-        conversations={conversations}
-        setConversation={(conversation: Conversation) =>
-          setCurrentConversation(conversation)
-        }
-      />
-      <MessagesPane
-        socket={socket}
-        currentConversation={currentConversation}
-        userId={userId}
-        closeConversation={() => setCurrentConversation(null)}
-        setConversation={(conversation: Conversation) =>
-          setCurrentConversation(conversation)
-        }
-      />
+    <Card
+      className="col-10 d-flex flex-row chat-card border border-secondary"
+      style={{ opacity: "85 %" }}
+    >
+      <div
+        className={`${
+          !isMobile ? "col-sm-5 col-md-5 col-lg-4 col-xl-4 col-xxl-3" : "col-12"
+        } ${isMobile && currentConversation && "d-none"}`}
+      >
+        <ConversationsPane
+          currentConversation={currentConversation}
+          conversations={conversations}
+          setConversation={(conversation: Conversation) =>
+            setCurrentConversation(conversation)
+          }
+        />
+      </div>
+      <div
+        className={`${
+          !isMobile ? "col-sm-7 col-md-7 col-lg-8 col-xl-8 col-xxl-9" : "col-12"
+        } ${isMobile && !currentConversation && "d-none"}`}
+      >
+        <MessagesPane
+          socket={socket}
+          currentConversation={currentConversation}
+          userId={userId}
+          closeConversation={() => setCurrentConversation(null)}
+          setConversation={(conversation: Conversation) =>
+            setCurrentConversation(conversation)
+          }
+        />
+      </div>
     </Card>
   );
 };

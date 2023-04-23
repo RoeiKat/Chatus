@@ -24,7 +24,7 @@ export const MessagesPane = function (props: MessagesPaneProps) {
       ? currentConversation?.otherUser.user
       : currentConversation?.initUser.user;
   return (
-    <div className="col-12 col-sm-9">
+    <div className="col-12">
       <div>
         <MessagesHeader
           user={userToRender!}

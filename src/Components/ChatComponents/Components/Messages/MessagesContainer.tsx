@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { Conversation } from "../../../../Interface/conversation.interface";
 import { Message } from "../../../../Interface/message.interface";
@@ -17,9 +17,11 @@ interface MessagesContainerProps {
 
 export const MessagesContainer = function (props: MessagesContainerProps) {
   const { currentConversation, socket, userId } = props;
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const [messages, setMessages] = useState<Message[] | undefined>();
   const [reload, setReload] = useState<boolean>(true);
   const [prevId, setPrevId] = useState<string>("");
+
   socket.on("newMessageEvent", (data) => {
     const { recieverId, senderId } = data;
     if (userId !== recieverId && userId !== senderId) {
@@ -30,13 +32,18 @@ export const MessagesContainer = function (props: MessagesContainerProps) {
   });
 
   useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({
+      inline: "start",
+      block: "nearest",
+      behavior: "auto",
+    });
     if (prevId !== currentConversation?._id) {
-      setMessages(undefined);
-      setPrevId(currentConversation?._id || "temp");
+      setReload(true);
     }
     if (!currentConversation) {
       setMessages(undefined);
       setReload(true);
+      return;
     } else if (currentConversation?._id && reload) {
       setPrevId(currentConversation._id);
       getMessages(currentConversation._id)
@@ -53,16 +60,24 @@ export const MessagesContainer = function (props: MessagesContainerProps) {
     } else {
       return;
     }
-  }, [currentConversation, reload, prevId, messages]);
+  }, [currentConversation, reload, prevId, messages, messagesEndRef]);
 
   return (
-    <div className={`${currentConversation && "messages-container"}`}>
+    <div
+      className={`${
+        currentConversation &&
+        "messages-container border-bottom border-secondary"
+      }`}
+    >
       {messages ? (
-        messages.map((message, index) => {
-          return <MessagePill key={index} message={message} />;
-        })
+        <div>
+          {messages.map((message, index) => {
+            return <MessagePill key={index} message={message} />;
+          })}
+          <div ref={messagesEndRef} />
+        </div>
       ) : (
-        <div className="no-conversation-container">
+        <div className="col-12 no-conversation-container ">
           <FontAwesomeIcon
             icon={faPaperPlane}
             className="no-conversation-plane"

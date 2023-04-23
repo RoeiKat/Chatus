@@ -1,14 +1,13 @@
 .messages-container {
-  height: 71vh;
+  height: 72vh;
   overflow: hidden;
-  background: #333138;
 }
 .messages-container:hover {
   overflow-y: scroll;
 }
 
 .no-conversation-container {
-  height: 77.3vh;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;

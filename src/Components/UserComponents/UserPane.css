@@ -1,8 +1,15 @@
 .logout-btn {
-  color: white;
+  color: #fbfeff;
+  opacity: 50%;
   margin-right: 10px;
   cursor: pointer;
+  transition: 500ms;
 }
+
+.logout-btn:hover {
+  opacity: 100%;
+}
+
 .username-light {
   color: #fffffa;
   font-weight: 500;

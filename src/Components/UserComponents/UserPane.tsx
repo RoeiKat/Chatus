@@ -14,8 +14,8 @@ export const UserPane = function (props: {
   const dispatch = useAppDispatch();
   const { color, username } = props;
   return (
-    <div className="container d-flex align-items-center justify-content-between border-top">
-      <div className="mt-2 d-flex">
+    <div className="container d-flex align-items-center justify-content-between">
+      <div className="d-flex">
         <UserAvatar color={color} username={username} />
         <p className="username-light">{username}</p>
       </div>

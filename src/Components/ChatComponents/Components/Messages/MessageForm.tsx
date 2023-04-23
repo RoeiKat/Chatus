@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane, faSmile } from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import "./MessageForm.css";
 import {
   focusContainer,
@@ -9,6 +9,7 @@ import {
 } from "../../../../util/focus-container";
 import { Conversation } from "../../../../Interface/conversation.interface";
 import { postMessage } from "../../../../API/Chat/message-create";
+import { EmojiPicker } from "./EmojiPicker";
 
 export const MessageForm = function (props: {
   currentConversation: Conversation | null;
@@ -42,27 +43,34 @@ export const MessageForm = function (props: {
   return (
     <>
       {currentConversation && (
-        <Form onSubmit={submitHandler} className="mt-1 mb-1 d-flex">
+        <Form
+          onSubmit={submitHandler}
+          className="p-1 mb-1 d-flex justify-content-center"
+        >
           <div
-            id="messageContainer"
-            className="mx-2 col-11 d-flex align-items-center input-container"
+            id="newMessageContainer"
+            className="mx-1 d-flex align-items-center input-container"
+            style={{ width: "90%" }}
           >
-            <FontAwesomeIcon icon={faSmile} className="emoji-btn" />
+            <EmojiPicker
+              setMessage={(str: string) => setMessage(str)}
+              message={message}
+            />
             <input
               type="text"
               value={message}
-              className="mx-1 text-light message-input"
+              className="text-light message-input"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setMessage(e.target.value)
               }
-              onFocus={() => focusContainer("messageContainer")}
-              onBlur={() => deFocusContainer("messageContainer")}
+              onFocus={() => focusContainer("newMessageContainer")}
+              onBlur={() => deFocusContainer("newMessageContainer")}
             />
           </div>
           <Button
             type="submit"
             variant={`primary ${!message ? "disabled" : null}`}
-            className="send-button"
+            className="mx-1"
           >
             <FontAwesomeIcon icon={faPaperPlane} />
           </Button>

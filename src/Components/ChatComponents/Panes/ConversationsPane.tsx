@@ -21,8 +21,8 @@ export const ConversationsPane = function (props: ConversationPaneProps) {
   const [query, setQuery] = useState<string>("");
 
   return (
-    <div className="col-12 col-sm-3 border-end">
-      <div className="border-bottom mt-1 p-2">
+    <div className="col-12 border-end border-secondary">
+      <div className="border-bottom border-secondary p-2">
         <SearchBar
           setResults={(users: User[]) => setSearchResults(users)}
           query={query}
@@ -34,7 +34,7 @@ export const ConversationsPane = function (props: ConversationPaneProps) {
         />
       </div>
       {!searchResults ? (
-        <div className="conversations-container">
+        <div className="conversations-container border-bottom border-secondary">
           {conversations?.length
             ? conversations.map((conversation, index) => {
                 return (
@@ -43,6 +43,7 @@ export const ConversationsPane = function (props: ConversationPaneProps) {
                     conversation={conversation}
                     setConversation={setConversation}
                     userId={userId}
+                    currentConversation={currentConversation}
                   />
                 );
               })
@@ -65,7 +66,7 @@ export const ConversationsPane = function (props: ConversationPaneProps) {
           })}
         </div>
       )}
-      <div className="mt-2">
+      <div className="mt-1">
         <UserPane color={color} username={username} />
       </div>
     </div>
