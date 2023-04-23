@@ -43,10 +43,7 @@ export const Chat = function (props: { socket: Socket }) {
     useState<Conversation | null>(null);
 
   return (
-    <Card
-      style={{ background: "#515052" }}
-      className="col-10 d-flex flex-row border-light"
-    >
+    <Card className="col-10 d-flex flex-row chat-card">
       <ConversationsPane
         currentConversation={currentConversation}
         conversations={conversations}

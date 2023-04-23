@@ -67,6 +67,7 @@ export const MessagesContainer = function (props: MessagesContainerProps) {
             icon={faPaperPlane}
             className="no-conversation-plane"
           />
+          <h1 className="mt-4 custom-header">No conversation selected</h1>
         </div>
       )}
     </div>
