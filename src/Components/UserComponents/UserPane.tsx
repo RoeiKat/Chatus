@@ -19,17 +19,17 @@ export const UserPane = function (props: {
         <UserAvatar color={color} username={username} />
         <p className="username-light">{username}</p>
       </div>
-      <div className="logout-btn">
-        <OverlayTrigger
-          placement="bottom"
-          overlay={<Tooltip id="tooltip">Logout</Tooltip>}
-        >
+      <OverlayTrigger
+        placement="bottom"
+        overlay={<Tooltip id="tooltip">Logout</Tooltip>}
+      >
+        <div className="logout-btn">
           <FontAwesomeIcon
             icon={faRightFromBracket}
             onClick={() => dispatch(userActions.logout())}
           />
-        </OverlayTrigger>
-      </div>
+        </div>
+      </OverlayTrigger>
     </div>
   );
 };

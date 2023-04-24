@@ -3,6 +3,9 @@ import { Conversation } from "../../../Interface/conversation.interface";
 import { MessageForm } from "../Components/Messages/MessageForm";
 import { MessagesContainer } from "../Components/Messages/MessagesContainer";
 import { MessagesHeader } from "../Components/Messages/MessagesHeader";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+
 interface MessagesPaneProps {
   currentConversation: Conversation | null;
   closeConversation: () => void;
@@ -30,11 +33,21 @@ export const MessagesPane = function (props: MessagesPaneProps) {
           user={userToRender!}
           closeConversation={closeConversation}
         />
-        <MessagesContainer
-          currentConversation={currentConversation}
-          socket={socket}
-          userId={userId}
-        />
+        {currentConversation ? (
+          <MessagesContainer
+            currentConversation={currentConversation}
+            socket={socket}
+            userId={userId}
+          />
+        ) : (
+          <div className="col-12 no-conversation-container ">
+            <FontAwesomeIcon
+              icon={faPaperPlane}
+              className="no-conversation-plane"
+            />
+            <h1 className="mt-4 custom-header">No conversation selected</h1>
+          </div>
+        )}
         <MessageForm
           currentConversation={currentConversation}
           userId={userId}

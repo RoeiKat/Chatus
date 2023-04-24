@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { uiActions } from "../store/slices/ui.slice";
 import { getConversations } from "../API/Chat/conversations-get";
 import { Conversation } from "../Interface/conversation.interface";
 import { Socket } from "socket.io-client";
@@ -12,14 +13,14 @@ export const Chat = function (props: { socket: Socket }) {
   const { socket } = props;
   const dispatch = useAppDispatch();
   const [reload, setReload] = useState<boolean>(true);
+  const { isMobile } = useAppSelector((state) => state.ui);
   const { token, checkAuth, userId } = useAppSelector((state) => state.user);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   const handleResize = () => {
-    if (window.innerWidth < 720) {
-      setIsMobile(true);
+    if (window.innerWidth < 1025) {
+      dispatch(uiActions.setMobile(true));
     } else {
-      setIsMobile(false);
+      dispatch(uiActions.setMobile(false));
     }
   };
 

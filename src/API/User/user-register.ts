@@ -1,6 +1,7 @@
 import { baseUrl } from "../baseUrl";
 import { AppDispatch } from "../../store/store";
 import { userLogin } from "./user-login";
+import { userActions } from "../../store/slices/user.slice";
 
 const URL = `${baseUrl}/user/register`;
 
@@ -13,8 +14,8 @@ interface RegisterInfo {
 }
 
 export const userRegister = function (registerInfo: RegisterInfo) {
-  console.log(registerInfo);
   return (dispatch: AppDispatch) => {
+    dispatch(userActions.setLoading(true));
     const postToServ = fetch(URL, {
       method: "POST",
       headers: {
@@ -37,6 +38,7 @@ export const userRegister = function (registerInfo: RegisterInfo) {
         );
       })
       .catch((error) => {
+        dispatch(userActions.setLoading(false));
         console.log(error);
       });
   };

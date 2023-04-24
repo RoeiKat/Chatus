@@ -19,7 +19,6 @@ export const ColorPicker = function (props: {
           type="color"
           id="colorInput"
           className="color-input"
-          defaultValue={color}
           value={color}
           title="Choose your color"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

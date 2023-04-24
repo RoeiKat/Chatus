@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { useState } from "react";
-import { useAppDispatch } from "../../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { Form } from "react-bootstrap";
 import { registerSchema } from "../../../schemas";
 import { userRegister } from "../../../API/User/user-register";
@@ -17,6 +17,7 @@ import { ColorPicker } from "./ColorPicker";
 
 export const Register = function () {
   const dispatch = useAppDispatch();
+  const { loading } = useAppSelector((state) => state.user);
   const [color, setColor] = useState<string>("#268fe8");
   const [validEmail, setValidEmail] = useState<boolean>(false);
   const [validUsername, setValidUserName] = useState<boolean>(false);
@@ -31,7 +32,9 @@ export const Register = function () {
       validationSchema: registerSchema,
       onSubmit(data) {
         if (!validEmail && !validUsername) return;
-        dispatch(userRegister({ color, ...data }));
+        if (!loading) {
+          dispatch(userRegister({ color, ...data }));
+        }
       },
     });
   useValuesCheck(

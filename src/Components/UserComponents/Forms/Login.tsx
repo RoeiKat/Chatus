@@ -18,7 +18,7 @@ import { FormHeader } from "./FormHeader";
 import { FormButton } from "./FormButton";
 
 export const Login = function () {
-  const { error } = useAppSelector((state) => state.user);
+  const { error, loading } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const { values, errors, handleChange, handleSubmit } = useFormik({
@@ -28,7 +28,9 @@ export const Login = function () {
     },
     validationSchema: loginSchema,
     onSubmit(data) {
-      dispatch(userLogin(data));
+      if (!loading) {
+        dispatch(userLogin(data));
+      }
     },
   });
   return (

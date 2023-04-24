@@ -15,13 +15,16 @@ interface ConversationPaneProps {
 }
 
 export const ConversationsPane = function (props: ConversationPaneProps) {
+  const { isMobile } = useAppSelector((state) => state.ui);
   const { userId, color, username } = useAppSelector((state) => state.user);
   const { currentConversation, conversations, setConversation } = props;
   const [searchResults, setSearchResults] = useState<User[] | null>(null);
   const [query, setQuery] = useState<string>("");
 
   return (
-    <div className="col-12 border-end border-secondary">
+    <div
+      className={`col-12 border-${!isMobile ? "end" : "none"} border-secondary`}
+    >
       <div className="border-bottom border-secondary p-2">
         <SearchBar
           setResults={(users: User[]) => setSearchResults(users)}

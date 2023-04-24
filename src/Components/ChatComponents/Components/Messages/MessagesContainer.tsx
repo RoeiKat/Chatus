@@ -4,8 +4,6 @@ import { Conversation } from "../../../../Interface/conversation.interface";
 import { Message } from "../../../../Interface/message.interface";
 import "./MessagesContainer.css";
 import { MessagePill } from "./MessagePill";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { Socket } from "socket.io-client";
 import { getMessages } from "../../../../API/Chat/conversations-get";
 
@@ -76,15 +74,7 @@ export const MessagesContainer = function (props: MessagesContainerProps) {
           })}
           <div ref={messagesEndRef} />
         </div>
-      ) : (
-        <div className="col-12 no-conversation-container ">
-          <FontAwesomeIcon
-            icon={faPaperPlane}
-            className="no-conversation-plane"
-          />
-          <h1 className="mt-4 custom-header">No conversation selected</h1>
-        </div>
-      )}
+      ) : null}
     </div>
   );
 };

@@ -8,19 +8,22 @@ interface SocketsData {
 interface UiInitialState {
   initalLoad: boolean;
   onlineUsers: SocketsData[];
-  mobileShowChat: boolean;
+  isMobile: boolean;
 }
 
 const initialState: UiInitialState = {
   initalLoad: true,
   onlineUsers: [],
-  mobileShowChat: false,
+  isMobile: false,
 };
 
 const uiSlice = createSlice({
   name: "ui",
   initialState,
   reducers: {
+    setMobile(state, action) {
+      state.isMobile = action.payload;
+    },
     setInitialLoad(state) {
       state.initalLoad = false;
     },
