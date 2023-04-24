@@ -1,1 +1,1 @@
-export const baseUrl = "https://chatus.onrender.com";
+export const baseUrl = "https://chatus-api.onrender.com";
