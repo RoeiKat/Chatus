@@ -7,17 +7,19 @@ import { SearchBar } from "../../Search/SearchBar";
 import { ConversationCard } from "../Components/Conversations/ConversationCard";
 import { UserPane } from "../../UserComponents/UserPane";
 import { SearchUserCard } from "../../Search/SearchUserCard";
+import { Socket } from "socket.io-client";
 
 interface ConversationPaneProps {
   currentConversation: Conversation | null;
   setConversation: (conversation: Conversation) => void;
   conversations: Conversation[] | null;
+  socket: Socket;
 }
 
 export const ConversationsPane = function (props: ConversationPaneProps) {
   const { isMobile } = useAppSelector((state) => state.ui);
   const { userId, color, username } = useAppSelector((state) => state.user);
-  const { currentConversation, conversations, setConversation } = props;
+  const { currentConversation, conversations, setConversation, socket } = props;
   const [searchResults, setSearchResults] = useState<User[] | null>(null);
   const [query, setQuery] = useState<string>("");
 
@@ -70,7 +72,12 @@ export const ConversationsPane = function (props: ConversationPaneProps) {
         </div>
       )}
       <div className="mt-1">
-        <UserPane color={color} username={username} />
+        <UserPane
+          color={color}
+          username={username}
+          socket={socket}
+          userId={userId}
+        />
       </div>
     </div>
   );

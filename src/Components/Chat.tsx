@@ -73,6 +73,7 @@ export const Chat = function (props: { socket: Socket }) {
           setConversation={(conversation: Conversation) =>
             setCurrentConversation(conversation)
           }
+          socket={socket}
         />
       </div>
       <div

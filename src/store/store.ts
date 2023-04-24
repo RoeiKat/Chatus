@@ -10,6 +10,7 @@ export const store = configureStore({
     user: userSlice.reducer,
     conversations: conversationSlice.reducer,
   },
+  devTools: false,
 });
 
 export type RootState = ReturnType<typeof store.getState>;
